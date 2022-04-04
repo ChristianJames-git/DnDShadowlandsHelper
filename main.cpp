@@ -53,6 +53,11 @@ int main() {
             }
             cout << endl;
         }
+        else if (input == "endspell") {
+            cout << "Remove #: " << flush;
+            cin >> input3;
+            actives.erase(actives.begin()+input3);
+        }
         else if (input == "damage") { //DONE
             cout << "Damage: " << flush;
             cin >> input;
