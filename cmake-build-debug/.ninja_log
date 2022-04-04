@@ -1,0 +1,8 @@
+# ninja log v5
+19	338	6707353032397006	CMakeFiles/ShadowlandsController.dir/SWPain.cpp.obj	b974882e9f11479e
+15	415	6707353033180275	CMakeFiles/ShadowlandsController.dir/Controller.cpp.obj	43de9fe936672d4c
+341	470	6707462876020294	ShadowlandsController.exe	ff08c7056d2960bd
+4	350	6707334157629159	CMakeFiles/ShadowlandsController.dir/Stats.cpp.obj	e0285eff44d67b9e
+0	190	6707479462035745	build.ninja	c70f4e200cc84fd3
+2	341	6707462874744021	CMakeFiles/ShadowlandsController.dir/main.cpp.obj	81635868c8a324f6
+17	320	6707353032217472	CMakeFiles/ShadowlandsController.dir/MindBlast.cpp.obj	720806069eb05347
