@@ -1,81 +1,122 @@
 #include "MindBlast.h"
 #include "SWPain.h"
-#include <vector>
+#include "MindFlay.h"
+#include "TollTheDead.h"
+#include "Controller.h"
 
 int main() {
     auto *a = new Stats();
+    auto *controller = new Controller(a);
     vector<Spell*> actives;
-    string input, input2;
-    int input3, input4;
+    string nextInstruction, strInput2;
+    int intInput1, intInput2;
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
     while (true) {
         printf("Next Instruction: ");
-        cin >> input;
+        cin >> nextInstruction;
 
-        if (input == "next") { //next turn
+        if (nextInstruction == "next") { //TODO simplify in Controller, implement rolling
+            int mastery = a->calcMastery();
             for (int i = 0 ; i < actives.size() ; i++) {
-                printf("%s %dd%d+%d\n", actives[i]->target.c_str(), actives[i]->mainDamage.diceAmount, actives[i]->mainDamage.diceType, actives[i]->mainDamage.modifier);
-                if (--actives[i]->duration == 0) actives.erase(actives.begin()+(i--));
+                printf("%s %dd%d+%d\n", actives[i]->target.c_str(), actives[i]->mainDamage.diceAmount, actives[i]->mainDamage.diceType, actives[i]->mainDamage.modifier + mastery);
+                if (--actives[i]->duration == 0) {
+                    if (actives[i]->masteryStack && a->masteryStacks > 0) a->masteryStacks--;
+                    actives.erase(actives.begin()+(i--));
+                }
             }
         }
-        else if (input == "cast") {
+        else if (nextInstruction == "cast") { //TODO add more spells and simplify in Controller
             printf("Target: ");
-            cin >> input;
+            cin >> strInput2;
             cout << "Spell Number: " << flush;
-            cin >> input3;
-            if (input3 == 0)
-                actives.push_back(new MindBlast(a, a->level, input));
+            cin >> intInput1;
+            if (intInput1 == 0)
+                actives.push_back(new MindBlast(a, a->level, strInput2));
+            else if (intInput1 == 1)
+                actives.push_back(new TollTheDead(a, a->level, strInput2));
             else {
                 cout << "Level: " << flush;
-                cin >> input4;
-                if (a->spellSlots[input4-1] > 0)
-                    a->spellSlots[input4-1]--;
+                cin >> intInput2;
+                if (a->spellSlots[intInput2-1] > 0)
+                    a->spellSlots[intInput2-1]--;
                 else {
-                    cout << "No spell slots of level " << input4 << " left!" << endl;
+                    cout << "No spell slots of level " << intInput2 << " left!" << endl;
                     continue;
                 }
-                switch (input3) {
-                    case 1:
-                        actives.push_back(new SWPain(a, input3, input));
+                a->masteryStacks++;
+                switch (intInput1) {
+                    case 2:
+                        actives.push_back(new SWPain(a, intInput2, strInput2));
+                        break;
+                    case 3:
+                        actives.push_back(new MindFlay(a, intInput2, strInput2));
                         break;
                     default:
                         cout << "Invalid spell" << endl;
                 }
             }
         }
-        else if (input == "spells") {
-            cout << "0-Mind Blast ; 1-Shadow Word:Pain ; MORE" << endl;
+        else if (nextInstruction == "help") { //TODO add commands
+            cout << "help cast spelllist active endspell damage heal roll check save modifier initiative test exit next" << endl;
         }
-        else if (input == "active") { //TODO print active list
+        else if (nextInstruction == "spelllist") { //TODO expand spelllist
+            cout << "0-Mind Blast ; 1-Toll the Dead ; 2-Shadow Word:Pain ; 3-Mind Flay ; MORE" << endl;
+        }
+        else if (nextInstruction == "active") {
             for (Spell* spell : actives) {
                 cout << spell->target << ":" << spell->name << " ";
             }
             cout << endl;
-        }
-        else if (input == "endspell") {
+        } //DONE
+        else if (nextInstruction == "endspell") {
             cout << "Remove #: " << flush;
-            cin >> input3;
-            actives.erase(actives.begin()+input3);
-        }
-        else if (input == "damage") { //DONE
-            cout << "Damage: " << flush;
-            cin >> input;
-            a->takeDamage(stoi(input));
-        }
-        else if (input == "roll") { //TODO add random
-            cout << "Type: " << flush;
-            cin >> input;
-            cout << "Roll d" << input << endl;
-        }
-        else if (input == "modifier") {
+            cin >> intInput1;
+            if (intInput1 < 0 or intInput1 >= actives.size())
+                cout << "Not a valid spell" << endl;
+            else {
+                if (actives[intInput1]->masteryStack)
+                    a->masteryStacks--;
+                actives.erase(actives.begin() + intInput1);
+            }
+        } //DONE
+        else if (nextInstruction == "damage" || nextInstruction == "heal") {
+            cout << "Amount: " << flush;
+            cin >> intInput1;
+            controller->changeHealth(nextInstruction,intInput1);
+        } //DONE
+        else if (nextInstruction == "roll") {
+            cout << "die: " << flush;
+            cin >> intInput1;
+            cout << controller->getRoll(intInput1) << endl;
+        } //DONE
+        else if (nextInstruction == "check" || nextInstruction == "save") {
             cout << "Stat: " << flush;
-            cin >> input;
-            cout << a->calcMod(stoi(input)) << endl;
-        }
-        else if (input == "exit") {
+            cin >> intInput1;
+            cout << "Proficient: " << flush;
+            cin >> strInput2;
+            cout << controller->getRoll(20) + a->calcMod(intInput1) + (strInput2 == "yes" ? a->proficiencyBonus : 0) << endl;
+        } //DONE
+        else if (nextInstruction == "modifier") {
+            cout << "Stat: " << flush;
+            cin >> intInput1;
+            cout << a->calcMod(intInput1) << endl;
+        } //DONE
+        else if (nextInstruction == "initiative") {
+            controller->rollInitiative();
+        } //DONE
+        else if (nextInstruction == "test") {
+            a->testStats();
+        } //DONE
+        else if (nextInstruction == "exit") {
             exit(EXIT_SUCCESS);
-        }
+        } //DONE
     }
 #pragma clang diagnostic pop
 }
+//TODO implement Channel Divinity
+//TODO implement 1.3 damage
+//TODO implement +12 damage per failed Wis Save
+//TODO implement +1d6 per attack
+//TODO implement haste roll
+//TODO implement crit rate

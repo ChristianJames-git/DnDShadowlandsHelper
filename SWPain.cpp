@@ -7,6 +7,6 @@ SWPain::SWPain(Stats* a, int level, string targ) {
     duration = 3;
     mainDamage.damageType = "necrotic";
     mainDamage.diceAmount = 1+level;
-    mainDamage.modifier = a->calcVersatility() + a->calcMastery();
+    mainDamage.modifier = a->calcVersatility();
     target = std::move(targ);
 }

@@ -1,11 +1,10 @@
 #include "MindBlast.h"
-
 #include <utility>
 
 MindBlast::MindBlast(Stats* a, int level, string targ) {
     name = "Mind Blast";
     mainDamage.diceType = 8;
-    mainDamage.modifier = a->calcMastery() + a->calcVersatility() + a->calcMod(4);
+    mainDamage.modifier = a->calcVersatility() + a->calcMod(MAINMODIFIER);
     duration = 1;
     mainDamage.damageType = "psychic";
     if (level >= 5) mainDamage.diceAmount++;
@@ -15,4 +14,5 @@ MindBlast::MindBlast(Stats* a, int level, string targ) {
     damageReduction.modifier = a->calcVersatility();
     damageReduction.damageType = "reduction";
     target = std::move(targ);
+    masteryStack = false;
 }
