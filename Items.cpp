@@ -16,10 +16,11 @@ void Items::InstantiateSubStats(Stats *s) {
     Trinket2(s);
     Weapon(s);
     Offhand(s);
+    Race(s);
     Head(s); //CALL THIS LAST
 }
 
-int Items::FrozenHeart(int damage, Stats* s) {
+int Items::FrozenHeartRockSolid(int damage, Stats* s) {
     int vers = 7 + s->calcVersatility();
     double mitigated = (double)damage * vers / 100.00;
     vers = ceil(mitigated);
@@ -62,12 +63,19 @@ void Items::Shoulder(Stats* s) {
 /**
  * Soulsewn Vestments(Chest)
  * Magic Half Plate Armor
+ * AC = 15 + DEX(max 2)
  * +1 Wisdom
  * +2 Constitution
  * +4% Critical Strike Chance
  * +6% Mastery
  */
 void Items::Chest(Stats *s) {
+    int dexACMod = s->calcMod(DEXTERITY);
+    if (dexACMod > 2)
+        dexACMod = 2;
+    if (dexACMod < 0)
+        dexACMod = 0;
+    s->changeAC(15 + dexACMod);
     s->changeMainStats(WISDOM, 1);
     s->changeMainStats(CONSTITUTION, 2);
     s->changeSubStats(CRITCHANCE, 4);
@@ -97,6 +105,7 @@ void Items::Wrist(Stats *s) {
  * +3% Haste
  */
 void Items::Hands(Stats *s) {
+    s->changeAC(1);
     s->changeMainStats(WISDOM, 1);
     s->changeMainStats(CONSTITUTION, 2);
     s->changeSubStats(CRITCHANCE, 5);
@@ -212,19 +221,24 @@ void Items::Trinket1(Stats *s) {
  * +20% Haste
  * +4 spell points //TODO spell points
  * +8 AC
- * Passive: Rock Solid- Every incoming instance of physical damage is reduced by (7+Your Versatility)%
- * Winter’s Caress: The haste of enemies within 10 feet of you is reduced by 5% //TODO implement this passive
+ * Passive - Rock Solid: Every incoming instance of physical damage is reduced by (7+Your Versatility)%
+ * Passive - Winter’s Caress: The haste of enemies within 10 feet of you is reduced by 5% //TODO implement this passive
  */
 void Items::Trinket2(Stats *s) {
     s->changeSubStats(HASTE, 20);
+    s->changeAC(8);
 }
 
 void Items::Weapon(Stats *s) {
 
 }
 
+/**
+ * Regular Shield
+ * +2 AC
+ */
 void Items::Offhand(Stats *s) {
-
+    s->changeAC(2);
 }
 
 void Items::Race(Stats *s) {

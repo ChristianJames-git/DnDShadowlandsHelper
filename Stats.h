@@ -39,6 +39,7 @@ public:
     int masteryStacks{};
     void changeMainStats(int stat, int change);
     void changeSubStats(int stat, int change);
+    void changeAC(int change);
     int hasteTurns();
     int getHealth();
 private:
@@ -50,4 +51,5 @@ private:
     int health{}, healthMax{};
     int stats[6]{}; //Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma
     int substats[4]{}; //mastery, vers, haste, crit chance
+    int AC{};
 };

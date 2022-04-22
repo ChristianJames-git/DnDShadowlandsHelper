@@ -87,6 +87,7 @@ void Stats::printStats() {
     cout << "Haste: " << substats[HASTE] << endl;
     cout << "---Tertiary Stats" << endl;
     cout << "Health: " << health << endl;
+    cout << "AC: " << AC << endl;
     cout << "Proficiency: " << proficiencyBonus << endl;
 }
 
@@ -108,7 +109,7 @@ int Stats::takeDamage(int damage) {
     int vers = ceil(mitigated);
     if (vers < calcVersatility())
         vers = calcVersatility();
-    vers += Items::FrozenHeart(damage, this);
+    vers += Items::FrozenHeartRockSolid(damage, this);
     damage -= vers; //versatility
     if (damage < 0) damage = 0;
     health -= damage;
@@ -154,6 +155,10 @@ void Stats::changeMainStats(int stat, int change) {
 
 void Stats::changeSubStats(int stat, int change) {
     substats[stat] += change;
+}
+
+void Stats::changeAC(int change) {
+    AC += change;
 }
 
 int Stats::hasteTurns() {

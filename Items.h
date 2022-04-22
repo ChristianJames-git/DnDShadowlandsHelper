@@ -7,7 +7,7 @@ class Stats;
 class Items {
 public:
     static void InstantiateSubStats(Stats* s);
-    static int FrozenHeart(int damage, Stats* s);
+    static int FrozenHeartRockSolid(int damage, Stats* s);
     static int WeaponBonus();
 private:
     static void Head(Stats* s);
