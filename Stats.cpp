@@ -74,17 +74,17 @@ void Stats::testStats() {
  */
 void Stats::printStats() {
     cout << "---Primary Stats" << endl;
-    cout << "Strength: " << stats[0] << endl;
-    cout << "Dexterity: " << stats[1] << endl;
-    cout << "Constitution: " << stats[2] << endl;
-    cout << "Intelligence: " << stats[3] << endl;
-    cout << "Wisdom: " << stats[4] << endl;
-    cout << "Charisma: " << stats[5] << endl;
+    cout << "Strength: " << stats[STRENGTH] << endl;
+    cout << "Dexterity: " << stats[DEXTERITY] << endl;
+    cout << "Constitution: " << stats[CONSTITUTION] << endl;
+    cout << "Intelligence: " << stats[INTELLIGENCE] << endl;
+    cout << "Wisdom: " << stats[WISDOM] << endl;
+    cout << "Charisma: " << stats[CHARISMA] << endl;
     cout << "---Secondary Stats" << endl;
-    cout << "Mastery: " << substats[0] << endl;
-    cout << "Versatility: " << substats[1] << endl;
-    cout << "Haste: " << substats[2] << endl;
-    cout << "Crit Chance: " << substats[3] << endl;
+    cout << "Mastery: " << substats[MASTERY] << endl;
+    cout << "Versatility: " << substats[VERSATILITY] << endl;
+    cout << "Crit Chance: " << substats[CRITCHANCE] << endl;
+    cout << "Haste: " << substats[HASTE] << endl;
     cout << "---Tertiary Stats" << endl;
     cout << "Health: " << health << endl;
     cout << "Proficiency: " << proficiencyBonus << endl;

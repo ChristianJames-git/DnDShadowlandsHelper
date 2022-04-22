@@ -11,7 +11,7 @@ public:
     static int WeaponBonus();
 private:
     static void Head(Stats* s);
-    static void Shoulders(Stats* s);
+    static void Shoulder(Stats* s);
     static void Chest(Stats* s);
     static void Wrist(Stats* s);
     static void Hands(Stats* s);
@@ -26,4 +26,5 @@ private:
     static void Trinket2(Stats* s);
     static void Weapon(Stats* s);
     static void Offhand(Stats* s);
+    static void Race(Stats* s); //Blood elf crit chance
 };

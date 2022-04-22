@@ -115,10 +115,8 @@ int main() {
 #pragma clang diagnostic pop
 }
 //TODO implement Channel Divinity
-//TODO implement 1.3 damage
 //TODO implement +12 damage per failed Wis Save
 //TODO implement +1d6 per attack
 //TODO implement haste roll
 //TODO implement crit rate
 //TODO roll to hit
-//TODO implement spell points
