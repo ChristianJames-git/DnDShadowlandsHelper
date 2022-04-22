@@ -19,7 +19,7 @@ int main() {
         if (nextInstruction == "next") { //TODO simplify in Controller, implement rolling
             int mastery = a->calcMastery();
             for (int i = 0 ; i < actives.size() ; i++) {
-                printf("%s %dd%d+%d\n", actives[i]->target.c_str(), actives[i]->mainDamage.diceAmount, actives[i]->mainDamage.diceType, actives[i]->mainDamage.modifier + mastery);
+                printf("%s %dd%d+%d\n", actives[i]->target.c_str(), actives[i]->mainDamage.diceAmount, actives[i]->mainDamage.diceType, actives[i]->mainDamage.modifier + mastery + Items::WeaponBonus());
                 if (--actives[i]->duration == 0) {
                     if (actives[i]->masteryStack && a->masteryStacks > 0) a->masteryStacks--;
                     actives.erase(actives.begin()+(i--));
@@ -120,5 +120,5 @@ int main() {
 //TODO implement +1d6 per attack
 //TODO implement haste roll
 //TODO implement crit rate
-//TODO code in staff
-//TODO code in Frozen Heart Vers
+//TODO roll to hit
+//TODO implement spell points

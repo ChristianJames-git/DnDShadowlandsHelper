@@ -22,11 +22,9 @@ void Stats::readIn() {
             for (int i = 0 ; i < 6 ; i++) {
                 stats[i] = stoi(temp.substr(3 * i, 2));
             }
-        else if (line == 3)
-            for (int i = 0 ; i < 4 ; i++)
-                substats[i] = stoi(temp.substr(3*i, 2));
-        else if (line == 4) {
+        else if (line == 3) {
             health = stoi(temp);
+            Items::InstantiateSubStats(this);
             healthMax = health;
         }
         line++;
@@ -110,6 +108,7 @@ int Stats::takeDamage(int damage) {
     int vers = ceil(mitigated);
     if (vers < calcVersatility())
         vers = calcVersatility();
+    vers += Items::FrozenHeart(damage, this);
     damage -= vers; //versatility
     if (damage < 0) damage = 0;
     health -= damage;
@@ -139,4 +138,29 @@ int Stats::calcVersatility() {
 int Stats::calcMastery() {
     int baseMastery = substats[0]/5;
     return baseMastery * 3 * masteryStacks;
+}
+
+void Stats::changeMainStats(int stat, int change) {
+    if (stat == CONSTITUTION) {
+        if (stats[CONSTITUTION] % 2 == 1) {
+            stats[CONSTITUTION]++;
+            change--;
+            health += level;
+        }
+        health += (level * (change/2));
+    }
+    stats[stat] += change;
+}
+
+void Stats::changeSubStats(int stat, int change) {
+    substats[stat] += change;
+}
+
+int Stats::hasteTurns() {
+    //int turns = substats[2]
+    return 0;
+}
+
+int Stats::getHealth() {
+    return health;
 }

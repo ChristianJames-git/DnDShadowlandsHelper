@@ -91,6 +91,12 @@ build CMakeFiles/ShadowlandsController.dir/TollTheDead.cpp.obj: CXX_COMPILER__Sh
   OBJECT_DIR = CMakeFiles\ShadowlandsController.dir
   OBJECT_FILE_DIR = CMakeFiles\ShadowlandsController.dir
 
+build CMakeFiles/ShadowlandsController.dir/Items.cpp.obj: CXX_COMPILER__ShadowlandsController_Debug D$:/Coding/ShadowlandsController/Items.cpp || cmake_object_order_depends_target_ShadowlandsController
+  DEP_FILE = CMakeFiles\ShadowlandsController.dir\Items.cpp.obj.d
+  FLAGS = -g -std=gnu++14
+  OBJECT_DIR = CMakeFiles\ShadowlandsController.dir
+  OBJECT_FILE_DIR = CMakeFiles\ShadowlandsController.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ShadowlandsController
@@ -99,7 +105,7 @@ build CMakeFiles/ShadowlandsController.dir/TollTheDead.cpp.obj: CXX_COMPILER__Sh
 #############################################
 # Link the executable ShadowlandsController.exe
 
-build ShadowlandsController.exe: CXX_EXECUTABLE_LINKER__ShadowlandsController_Debug CMakeFiles/ShadowlandsController.dir/main.cpp.obj CMakeFiles/ShadowlandsController.dir/Stats.cpp.obj CMakeFiles/ShadowlandsController.dir/SWPain.cpp.obj CMakeFiles/ShadowlandsController.dir/Controller.cpp.obj CMakeFiles/ShadowlandsController.dir/MindBlast.cpp.obj CMakeFiles/ShadowlandsController.dir/MindFlay.cpp.obj CMakeFiles/ShadowlandsController.dir/TollTheDead.cpp.obj
+build ShadowlandsController.exe: CXX_EXECUTABLE_LINKER__ShadowlandsController_Debug CMakeFiles/ShadowlandsController.dir/main.cpp.obj CMakeFiles/ShadowlandsController.dir/Stats.cpp.obj CMakeFiles/ShadowlandsController.dir/SWPain.cpp.obj CMakeFiles/ShadowlandsController.dir/Controller.cpp.obj CMakeFiles/ShadowlandsController.dir/MindBlast.cpp.obj CMakeFiles/ShadowlandsController.dir/MindFlay.cpp.obj CMakeFiles/ShadowlandsController.dir/TollTheDead.cpp.obj CMakeFiles/ShadowlandsController.dir/Items.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\ShadowlandsController.dir
