@@ -2,7 +2,7 @@
 
 #include <utility>
 
-MindFlay::MindFlay(Stats *a, int level, string targ) {
+MindFlay::MindFlay(Stats *a, int level, string targ) { //TODO implement spell ending on a miss
     name = "Mind Flay";
     duration = 100;
 

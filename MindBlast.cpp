@@ -10,7 +10,7 @@ MindBlast::MindBlast(Stats* a, int level, string targ) {
     if (level >= 5) mainDamage.diceAmount++;
     if (level >= 11) mainDamage.diceAmount++;
     if (level >= 17) mainDamage.diceAmount++;
-    damageReduction.diceAmount = mainDamage.diceAmount;
+    damageReduction.diceAmount = mainDamage.diceAmount; //TODO implement secondary damage
     damageReduction.modifier = a->calcVersatility();
     damageReduction.damageType = "reduction";
     target = std::move(targ);

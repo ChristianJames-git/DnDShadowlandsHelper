@@ -120,3 +120,5 @@ int main() {
 //TODO implement +1d6 per attack
 //TODO implement haste roll
 //TODO implement crit rate
+//TODO code in staff
+//TODO code in Frozen Heart Vers

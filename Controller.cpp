@@ -91,3 +91,4 @@ void Controller::changeHealth(const string& direction, int amount) {
 void Controller::rollInitiative() {
     cout << getRoll(20) + stats->calcMod(DEXTERITY) << endl;
 }
+//TODO flesh out Controller
