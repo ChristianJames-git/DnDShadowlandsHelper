@@ -18,10 +18,11 @@ public:
     int duration{};
     int differentDice = 1;
     bool hasSpecialOut = false;
-    string specialOut;
+    string specialOut; //TODO special out visual output
     string target;
     vector<spellStats*> q;
     bool masteryStack = true;
+    bool attackRoll = false;
 };
 
 #endif

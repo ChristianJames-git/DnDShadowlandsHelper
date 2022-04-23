@@ -32,6 +32,7 @@ public:
     int calcMod(int index);
     int calcVersatility();
     int calcMastery();
+    int calcCritChance();
     int spellSlots[9]{};
     int damageDealt{};
     int level{};
@@ -40,7 +41,7 @@ public:
     void changeMainStats(int stat, int change);
     void changeSubStats(int stat, int change);
     void changeAC(int change);
-    int hasteTurns();
+    int hasteTurns(int d20);
     int getHealth();
 private:
     void InstantiateSlots(int level);

@@ -8,6 +8,7 @@ class Controller {
 public:
     explicit Controller(Stats* s);
     int getRoll(int d);
+    int rollDice(int d, int num);
 
     void changeHealth(const string& direction, int amount);
     void rollInitiative();

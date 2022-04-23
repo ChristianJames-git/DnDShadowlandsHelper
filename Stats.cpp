@@ -133,12 +133,17 @@ int Stats::calcMod(int index) {
 }
 
 int Stats::calcVersatility() {
-    return substats[1]/5;
+    return substats[VERSATILITY]/5;
 }
 
 int Stats::calcMastery() {
-    int baseMastery = substats[0]/5;
+    int baseMastery = substats[MASTERY]/5;
     return baseMastery * 3 * masteryStacks;
+}
+
+int Stats::calcCritChance() {
+    int critDecrease = substats[CRITCHANCE]/5;
+    return 20 - critDecrease;
 }
 
 void Stats::changeMainStats(int stat, int change) {
@@ -161,9 +166,12 @@ void Stats::changeAC(int change) {
     AC += change;
 }
 
-int Stats::hasteTurns() {
-    //int turns = substats[2]
-    return 0;
+int Stats::hasteTurns(int d20) {
+    int turns = substats[HASTE] / 25;
+    int left = (substats[HASTE] % 25) / 5;
+    if (d20 > 20 - left*4)
+        turns++;
+    return turns;
 }
 
 int Stats::getHealth() {

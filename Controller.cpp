@@ -40,6 +40,13 @@ Controller::Controller(Stats* s) {
 //    cout << total100 / 1000.0 << endl;
 }
 
+int Controller::rollDice(int num, int d) {
+    int sum = 0;
+    for (int i = 0 ; i < num ; i++)
+        sum += getRoll(d);
+    return sum;
+}
+
 int Controller::getRoll(int d) {
     int toReturn;
     switch (d) {
