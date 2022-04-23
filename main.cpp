@@ -18,17 +18,25 @@ int main() {
 
         if (nextInstruction == "next") {
             int mastery = a->calcMastery();
-            int modifier, diceAmount;
+            int modifier, diceAmount, damage;
             bool hit;
             for (int i = 0 ; i < actives.size() ; i++) {
                 modifier = actives[i]->mainDamage.modifier + mastery + Items::WeaponBonus();
                 diceAmount = actives[i]->mainDamage.diceAmount;
                 if (actives[i]->attackRoll)
                     hit = controller->attackRoll(actives[i], &diceAmount);
-                else
+                else {
                     hit = controller->spellSave(actives[i]);
-                if (hit)
-                    printf("%s: %dd%d+%d = %d %s damage\n", actives[i]->target.c_str(), diceAmount, actives[i]->mainDamage.diceType, modifier, controller->rollDice(diceAmount, actives[i]->mainDamage.diceType) + modifier, actives[i]->mainDamage.damageType.c_str());
+                    if (hit) modifier += 12; //Zack's Sword
+                }
+                if (hit) {
+                    damage = controller->rollDice(diceAmount, actives[i]->mainDamage.diceType) + modifier;
+                    damage = (int)(damage * 1.3);
+                    printf("%s: %dd%d+%d = %d %s damage\n", actives[i]->target.c_str(), diceAmount,
+                           actives[i]->mainDamage.diceType, modifier, damage,
+                           actives[i]->mainDamage.damageType.c_str());
+                    a->damageDealt += damage;
+                }
                 else
                     printf("%s on %s misses\n", actives[i]->name.c_str(), actives[i]->target.c_str());
                 if (--actives[i]->duration == 0) {
@@ -127,5 +135,4 @@ int main() {
 #pragma clang diagnostic pop
 }
 //TODO implement Channel Divinity
-//TODO implement +12 damage per failed Wis Save
 //TODO implement +1d6 per attack

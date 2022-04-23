@@ -130,7 +130,6 @@ bool Controller::spellSave(Spell* spell) {
     int intInput1;
     cout << "Save Roll: " << flush;
     cin >> intInput1;
-    cout << stats->calcSpellSaveDC() << endl;
     if (intInput1 >= stats->calcSpellSaveDC())
         return false;
     else if (intInput1 == 1 or intInput1 == 2) {
