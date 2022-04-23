@@ -98,4 +98,44 @@ void Controller::changeHealth(const string& direction, int amount) {
 void Controller::rollInitiative() {
     cout << getRoll(20) + stats->calcMod(DEXTERITY) << endl;
 }
-//TODO flesh out Controller
+
+bool Controller::attackRoll(Spell* spell, int* diceAmount) {
+    bool hit = true;
+    string strInput;
+    cout << spell->target << ":" << spell->name << " advantage/disadvantage: " << flush;
+    cin >> strInput;
+    int roll = getRoll(20);
+    if (strInput == "advantage" or strInput == "a") {
+        int roll2 = getRoll(20);
+        roll = max(roll, roll2);
+    } else if (strInput == "disadvantage" or strInput == "d") {
+        int roll2 = getRoll(20);
+        roll = min(roll, roll2);
+    }
+    if (roll >= stats->calcCritChance())
+        *diceAmount *= 2;
+    else if (roll == 1)
+        hit = false;
+    else {
+        roll += stats->calcMod(MAINMODIFIER) + stats->proficiencyBonus;
+        cout << "Does a " << roll << " hit? " << flush;
+        cin >> strInput;
+        if (strInput == "no")
+            hit = false;
+    }
+    return hit;
+}
+
+bool Controller::spellSave(Spell* spell) {
+    int intInput1;
+    cout << "Save Roll: " << flush;
+    cin >> intInput1;
+    cout << stats->calcSpellSaveDC() << endl;
+    if (intInput1 >= stats->calcSpellSaveDC())
+        return false;
+    else if (intInput1 == 1 or intInput1 == 2) {
+        //TODO implement 1 and 2 on spell save here
+        return true;
+    }
+    return true;
+}

@@ -13,7 +13,7 @@
  * @param level spell level
  * @param targ target
  */
-MindFlay::MindFlay(Stats *a, int level, string targ) { //TODO implement spell ending on a miss
+MindFlay::MindFlay(Stats *a, int level, string targ) {
     name = "Mind Flay";
     duration = 100;
 

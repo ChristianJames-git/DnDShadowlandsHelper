@@ -16,45 +16,21 @@ int main() {
         printf("Next Instruction: ");
         cin >> nextInstruction;
 
-        if (nextInstruction == "next") { //TODO simplify in Controller, implement rolling
+        if (nextInstruction == "next") {
             int mastery = a->calcMastery();
-            int modifier;
-            int diceAmount;
+            int modifier, diceAmount;
+            bool hit;
             for (int i = 0 ; i < actives.size() ; i++) {
                 modifier = actives[i]->mainDamage.modifier + mastery + Items::WeaponBonus();
                 diceAmount = actives[i]->mainDamage.diceAmount;
-                if (actives[i]->attackRoll) {
-                    bool hit = true;
-                    cout << actives[i]->target << ":" << actives[i]->name << " advantage/disadvantage: " << flush;
-                    cin >> strInput2;
-                    int roll = controller->getRoll(20);
-                    if (strInput2 == "advantage" or strInput2 == "a") {
-                        int roll2 = controller->getRoll(20);
-                        roll = max(roll, roll2);
-                    } else if (strInput2 == "disadvantage" or strInput2 == "d") {
-                        int roll2 = controller->getRoll(20);
-                        roll = min(roll, roll2);
-                    }
-                    if (roll >= a->calcCritChance())
-                        diceAmount *= 2;
-                    else if (roll == 1)
-                        hit = false;
-                    else {
-                        roll += a->calcMod(MAINMODIFIER) + a->proficiencyBonus;
-                        cout << "Does a " << roll << " hit? " << flush;
-                        cin >> strInput2;
-                        if (strInput2 == "no")
-                            hit = false;
-                    }
-
-                    if (!hit) {
-                        printf("%s on %s misses\n", actives[i]->name.c_str(), actives[i]->target.c_str());
-                        if (actives[i]->masteryStack && a->masteryStacks > 0) a->masteryStacks--;
-                        actives.erase(actives.begin()+(i--));
-                        continue;
-                    }
-                }
-                printf("%s: %dd%d+%d = %d %s damage\n", actives[i]->target.c_str(), diceAmount, actives[i]->mainDamage.diceType, modifier, controller->rollDice(diceAmount, actives[i]->mainDamage.diceType) + modifier, actives[i]->mainDamage.damageType.c_str());
+                if (actives[i]->attackRoll)
+                    hit = controller->attackRoll(actives[i], &diceAmount);
+                else
+                    hit = controller->spellSave(actives[i]);
+                if (hit)
+                    printf("%s: %dd%d+%d = %d %s damage\n", actives[i]->target.c_str(), diceAmount, actives[i]->mainDamage.diceType, modifier, controller->rollDice(diceAmount, actives[i]->mainDamage.diceType) + modifier, actives[i]->mainDamage.damageType.c_str());
+                else
+                    printf("%s on %s misses\n", actives[i]->name.c_str(), actives[i]->target.c_str());
                 if (--actives[i]->duration == 0) {
                     if (actives[i]->masteryStack && a->masteryStacks > 0) a->masteryStacks--;
                     actives.erase(actives.begin()+(i--));

@@ -174,6 +174,10 @@ int Stats::hasteTurns(int d20) {
     return turns;
 }
 
-int Stats::getHealth() {
+int Stats::getHealth() const {
     return health;
+}
+
+int Stats::calcSpellSaveDC() {
+    return 8 + calcMod(MAINMODIFIER) + proficiencyBonus;
 }

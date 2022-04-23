@@ -9,6 +9,8 @@ public:
     explicit Controller(Stats* s);
     int getRoll(int d);
     int rollDice(int d, int num);
+    bool attackRoll(Spell* spell, int* diceAmount);
+    bool spellSave(Spell* spell);
 
     void changeHealth(const string& direction, int amount);
     void rollInitiative();
