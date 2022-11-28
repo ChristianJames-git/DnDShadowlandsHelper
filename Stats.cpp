@@ -104,6 +104,11 @@ void Stats::printSlots() {
     }
 }
 
+/**
+ * Mitigate damage then return remaining health
+ * @param damage
+ * @return remaining health
+ */
 int Stats::takeDamage(int damage) {
     double mitigated = (double)damage * (3 * calcVersatility()) / 100;
     int vers = ceil(mitigated);
@@ -118,6 +123,11 @@ int Stats::takeDamage(int damage) {
     return health;
 }
 
+/**
+ * Heal
+ * @param healing
+ * @return current health
+ */
 int Stats::getHealed(int healing) {
     health += healing;
     if (health > healthMax)
@@ -125,6 +135,11 @@ int Stats::getHealed(int healing) {
     return health;
 }
 
+/**
+ * Calculate main stat modifier
+ * @param index
+ * @return mod
+ */
 int Stats::calcMod(int index) {
     int temp = stats[index]-10;
     if (temp >= 0)
@@ -137,8 +152,8 @@ int Stats::calcVersatility() {
 }
 
 int Stats::calcMastery() {
-    int baseMastery = substats[MASTERY]/5;
-    return baseMastery * 3 * masteryStacks;
+    int baseMastery = substats[MASTERY]/5*3;
+    return baseMastery * masteryStacks;
 }
 
 int Stats::calcCritChance() {
@@ -179,5 +194,11 @@ int Stats::getHealth() const {
 }
 
 int Stats::calcSpellSaveDC() {
-    return 8 + calcMod(MAINMODIFIER) + proficiencyBonus;
+    return 8 + calcMod(MAINMODIFIER) + proficiencyBonus + Items::WeaponBonus();
+}
+
+int Stats::getStats(int type, int stat) {
+    if (type == 0)
+        return stats[stat];
+    return substats[stat];
 }

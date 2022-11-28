@@ -27,4 +27,6 @@ private:
     static void Weapon(Stats* s);
     static void Offhand(Stats* s);
     static void Race(Stats* s); //Blood elf crit chance
+    static void Renown(Stats* s);
+    static void Torghast(Stats* s);
 };

@@ -27,11 +27,11 @@ int main() {
                     hit = controller->attackRoll(actives[i], &diceAmount);
                 else {
                     hit = controller->spellSave(actives[i]);
-                    if (hit) modifier += 12; //Zack's Sword
+                    if (hit) modifier += 15; //Zack's Sword
                 }
                 if (hit) {
                     damage = controller->rollDice(diceAmount, actives[i]->mainDamage.diceType) + modifier;
-                    damage = (int)(damage * 1.3);
+                    damage = (int)(damage * 1.35);
                     printf("%s: %dd%d+%d = %d %s damage\n", actives[i]->target.c_str(), diceAmount,
                            actives[i]->mainDamage.diceType, modifier, damage,
                            actives[i]->mainDamage.damageType.c_str());
@@ -47,17 +47,14 @@ int main() {
             cout << "Next Turn: " << 2 + a->hasteTurns(controller->getRoll(20)) << " actions" << endl;
         }
         else if (nextInstruction == "cast") { //TODO add more spells and simplify in Controller
-            printf("Target: ");
-            cin >> strInput2;
-            cout << "Spell Number: " << flush;
-            cin >> intInput1;
+            cin >> strInput2; //Target
+            cin >> intInput1; //Spell Number
+            cin >> intInput2; //Level
             if (intInput1 == 0)
                 actives.push_back(new MindBlast(a, a->level, strInput2));
             else if (intInput1 == 1)
                 actives.push_back(new TollTheDead(a, a->level, strInput2));
             else {
-                cout << "Level: " << flush;
-                cin >> intInput2;
                 if (a->spellSlots[intInput2-1] > 0)
                     a->spellSlots[intInput2-1]--;
                 else {
@@ -77,6 +74,27 @@ int main() {
                 }
             }
         }
+        else if (nextInstruction == "qcast") {
+            cin >> intInput1; //Turn
+            if (intInput1 < 1)
+                intInput1 = 1;
+            else if (intInput1 > 5)
+                intInput1 = 5;
+            a->masteryStacks = 3;
+            int mastery = a->calcMastery()*3 + a->calcVersatility() + a->calcMod(MAINMODIFIER);
+            int avgDice = 6;
+            int avgDiceNum = 8;
+            int attacks = 2 + a->hasteTurns(controller->getRoll(20)) + intInput1;
+
+            int damageTot = 0;
+            cout << "Round: " << intInput1 << endl;
+            for (int i = 0 ; i < attacks ; i++) {
+                double damage = (controller->rollDice(avgDice, avgDiceNum) + mastery) * 1.35;
+                cout << "Attack #" << i + 1 << ": " << ceil(damage) << endl;
+                damageTot += ceil(damage);
+            }
+            cout << "Total Damage: " << damageTot << endl;
+        }
         else if (nextInstruction == "help") { //TODO add commands
             cout << "help cast spelllist active endspell damage heal roll check save modifier initiative test exit next" << endl;
         }
@@ -90,7 +108,6 @@ int main() {
             cout << endl;
         } //DONE
         else if (nextInstruction == "endspell") {
-            cout << "Remove #: " << flush;
             cin >> intInput1;
             if (intInput1 < 0 or intInput1 >= actives.size())
                 cout << "Not a valid spell" << endl;
@@ -101,12 +118,10 @@ int main() {
             }
         } //DONE
         else if (nextInstruction == "damage" || nextInstruction == "heal") {
-            cout << "Amount: " << flush;
             cin >> intInput1;
             controller->changeHealth(nextInstruction,intInput1);
         } //DONE
         else if (nextInstruction == "roll") {
-            cout << "die: " << flush;
             cin >> intInput1;
             cout << controller->getRoll(intInput1) << endl;
         } //DONE

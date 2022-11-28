@@ -44,6 +44,7 @@ public:
     void changeAC(int change);
     int hasteTurns(int d20);
     int getHealth() const;
+    int getStats(int, int);
 private:
     void InstantiateSlots(int level);
     void readIn();
